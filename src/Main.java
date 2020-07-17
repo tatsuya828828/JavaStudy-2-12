@@ -26,6 +26,18 @@ public class Main {
 				// 戻り値を使い検索結果のデータを取り出すことができる
 				ResultSet rs = pstmt.executeQuery();
 				// 結果表を処理する
+				// 複数の行の結果表の処理
+				// nextメソッドは次の行進むことが可能であればtrueを返すのでrs.next()で結果行の最後まで処理を順次進めることができる
+				while(rs.next()) {
+					System.out.println(rs.getString("NAME"));
+				}
+				// 0もしくは1行の結果表が返される可能性があるSELECT文の場合、結果処理は
+				// 目的の行が見つかったか見つからなかったかの二択になるため以下のようなコードパターンが多い
+				if(rs.next()) {
+					System.out.println("ゴブリンのHPは"+ rs.getInt("HP"));
+				} else {
+					System.out.println("ゴブリンはDBに存在しません");
+				}
 			} catch(Exception e) {
 				System.out.println("エラーが発生しました");
 				e.printStackTrace();
