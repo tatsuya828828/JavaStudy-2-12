@@ -17,6 +17,9 @@ public class Main {
 		// DBへの接続
 		// getConnectionの引数にはJDBC URLと接続IDとパスワードを与える
 		try(Connection con = DriverManager.getConnection("jdbc:h2:~/mydb", "sa", "")){
+			// 自動コミットをfalseにすることで、手動コミットにすることができる
+			// con.setAutoCommit(false);
+			// 手動コミットの際は、コミットするときはcommitメソッド、途中で処理をキャンセルしたい場合はrollbackメソッドを使う
 			System.out.println("H2データベースに接続しました");
 			// 雛形を用意する
 			try(PreparedStatement pstmt = con.prepareStatement("SELECT*FROM MONSTERS WHERE HP >= ?")){
@@ -39,7 +42,7 @@ public class Main {
 					System.out.println("ゴブリンはDBに存在しません");
 				}
 			} catch(Exception e) {
-				System.out.println("エラーが発生しました");
+				System.out.println("処理時にエラーが発生しました");
 				e.printStackTrace();
 			}
 		// 接続やSQL処理の失敗時の処理
